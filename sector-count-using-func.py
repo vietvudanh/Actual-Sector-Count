@@ -83,11 +83,11 @@ def sector_count(df, d, st):
         elif df.at[line, 'begin_time'] == d:
             count[nst - 1] = count[nst - 1] + 1
         elif df.at[line, 'begin_time'] < d:
-            if int(df.at[line, 'begin_time']/st) == int(df.at[line, 'leaving_time']/st):
+            if int(df.at[line, 'begin_time'] / st) == int(df.at[line, 'leaving_time'] / st):
                 pass
             else:
-                for i in range(math.ceil(df.at[line, 'begin_time']/st),
-                               min(nst, math.floor(df.at[line, 'leaving_time']/st) + 1)):
+                for i in range(math.ceil(df.at[line, 'begin_time'] / st),
+                               min(nst, math.floor(df.at[line, 'leaving_time'] / st) + 1)):
                     count[i] = count[i] + 1
     return count
 
@@ -95,6 +95,21 @@ def sector_count(df, d, st):
 # output to csv file
 def output_csv_no_index(df, sn):
     df.to_csv('result-' + sn + '.csv', index=False)
+
+
+# plotting function
+def plotting(count, sn):
+    plt.plot(count)
+    plt.xlabel('Time')
+    plt.ylabel('Sector count [number of airplanes]')
+    plt.title('Number of airplanes in Sector ' + sn)
+    plt.axis([0, len(z), 0, max(z) + 1])
+    plt.yticks(np.arange(0, max(z) + 1, 1))
+    # additional plotting parameters
+    plt.grid()
+    # plt.xticks(np.arange(0, len(sector_count), 5))
+    # plt.setp(plt.gca().get_xticklabels(), rotation=45, ha="right")
+    plt.show()
 
 
 # write data to the new DataFrame
@@ -107,17 +122,5 @@ y = transpose_df(x)
 # sector count
 z = sector_count(y, duration, step)
 
-output_csv_no_index(y, name)
 
-# plotting
-plt.plot(z)
-plt.xlabel('Time')
-plt.ylabel('Sector count [number of aircraft]')
-plt.title('Number of aircrafts in Sector ' + name)
-plt.axis([0, len(z), 0, max(z) + 1])
-plt.yticks(np.arange(0, max(z) + 1, 1))
-# additional plotting parameters
-plt.grid()
-# plt.xticks(np.arange(0, len(sector_count), 5))
-# plt.setp(plt.gca().get_xticklabels(), rotation=45, ha="right")
-plt.show()
+
