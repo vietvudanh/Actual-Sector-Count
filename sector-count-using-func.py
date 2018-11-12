@@ -94,7 +94,7 @@ def sector_count(df, d, st):
 
 # output to csv file
 def output_csv_no_index(df, sn):
-    df.to_csv('result-' + sn + '.csv', index=False)
+    df.to_csv('result/result-' + sn + '.csv', index=False)
 
 
 # plotting function
@@ -122,5 +122,9 @@ y = transpose_df(x)
 # sector count
 z = sector_count(y, duration, step)
 
+# output result
+# output_csv_no_index(y, name)
 
+# plotting
+plotting(z, name)
 
